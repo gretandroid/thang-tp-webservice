@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.updateArticleButton.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                val article = RetrofitInstance.instance.updateArticle(23, Article(0, 1, "Retrofit", "Update"));
+                val article = RetrofitInstance.instance.updateArticle(23, Article(23, 1, "Retrofit", "Update2"));
                 Log.d("App", article.toString())
             }
         }
