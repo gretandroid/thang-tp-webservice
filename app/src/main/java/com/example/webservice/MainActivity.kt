@@ -40,5 +40,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.deleteArticleButton.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                RetrofitInstance.instance.deleteArticle(23);
+                Log.d("App", "Deleted an article");
+            }
+        }
+
     }
 }
