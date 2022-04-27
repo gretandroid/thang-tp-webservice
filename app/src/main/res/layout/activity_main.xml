@@ -6,68 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/allArticlesButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
-        android:layout_marginTop="72dp"
-        android:text="All Articles"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="345dp"
+        android:layout_height="401dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.215" />
 
-    <Button
-        android:id="@+id/articleByIdButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Article By Id"
-        app:layout_constraintEnd_toEndOf="@+id/allArticlesButton"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/allArticlesButton"
-        app:layout_constraintTop_toBottomOf="@+id/allArticlesButton" />
-
-    <Button
-        android:id="@+id/insertArticleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="Insert Article"
-        app:layout_constraintEnd_toEndOf="@+id/articleByIdButton"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/articleByIdButton"
-        app:layout_constraintTop_toBottomOf="@+id/articleByIdButton" />
-
-    <Button
-        android:id="@+id/updateArticleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:text="Update Article"
-        app:layout_constraintEnd_toEndOf="@+id/insertArticleButton"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/insertArticleButton"
-        app:layout_constraintTop_toBottomOf="@+id/insertArticleButton" />
-
-    <Button
-        android:id="@+id/deleteArticleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="Delete Article"
-        app:layout_constraintEnd_toEndOf="@+id/updateArticleButton"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/updateArticleButton"
-        app:layout_constraintTop_toBottomOf="@+id/updateArticleButton" />
+    <TextView
+        android:id="@+id/errorTextView"
+        android:layout_width="209dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="52dp"
+        android:hint="No Error"
+        app:layout_constraintStart_toStartOf="@+id/recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/mainProgressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="188dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="4dp"
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/allArticleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="List Articles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/deleteArticleButton" />
+        app:layout_constraintTop_toBottomOf="@+id/errorTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
