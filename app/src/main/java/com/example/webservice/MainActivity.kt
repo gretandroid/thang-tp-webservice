@@ -3,6 +3,7 @@ package com.example.webservice
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -21,7 +22,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.Dispatcher
 import kotlin.coroutines.CoroutineContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ArticleAdapter.ArticleAdapterListener {
     private lateinit var viewModel: MainViewModel
     private lateinit var binding: ActivityMainBinding
     private val listArticle = mutableListOf<Article>();
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             listArticle.addAll(articles);
 
             if (adapter === null) {
-                adapter = ArticleAdapter(listArticle);
+                adapter = ArticleAdapter(listArticle, this);
                 binding.recyclerView.layoutManager = LinearLayoutManager(this);
                 binding.recyclerView.adapter = adapter;
             } else {
@@ -120,5 +121,9 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 
+    }
+
+    override fun onClick(view: View?, person: Article?) {
+        TODO("Not yet implemented")
     }
 }

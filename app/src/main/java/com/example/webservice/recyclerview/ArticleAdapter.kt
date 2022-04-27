@@ -8,7 +8,7 @@ import com.example.webservice.R
 import com.example.webservice.databinding.RowBinding
 import com.example.webservice.model.Article
 
-class ArticleAdapter(private val listArticle : List<Article>?) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
+class ArticleAdapter(private val listArticle : List<Article>?, listener : ArticleAdapterListener) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -29,5 +29,9 @@ class ArticleAdapter(private val listArticle : List<Article>?) : RecyclerView.Ad
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val binding = RowBinding.bind(itemView);
+    }
+
+    interface ArticleAdapterListener {
+        fun onClick(view: View?, person: Article?)
     }
 }
