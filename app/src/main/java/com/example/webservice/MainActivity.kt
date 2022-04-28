@@ -2,69 +2,17 @@ package com.example.webservice
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.webservice.databinding.ActivityMainBinding
 import com.example.webservice.model.Article
 import com.example.webservice.recyclerview.ArticleAdapter
-import com.example.webservice.viewmodel.MainViewModel
-import com.example.webservice.webservice.RetrofitInstance
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
-import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity(), ArticleAdapter.ArticleAdapterListener {
-    private lateinit var viewModel: MainViewModel
-    private lateinit var binding: ActivityMainBinding
-    private val listArticle = mutableListOf<Article>();
-    private var adapter: ArticleAdapter? = null;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java);
 
-        // subcribe update UI
-        viewModel.listArticle.observe(this) { articles ->
-            listArticle.clear();
-            listArticle.addAll(articles);
-
-            if (adapter === null) {
-                adapter = ArticleAdapter(listArticle, this);
-                binding.recyclerView.layoutManager = LinearLayoutManager(this);
-                binding.recyclerView.adapter = adapter;
-            } else {
-                adapter?.notifyDataSetChanged();
-            }
-        }
-        viewModel.error.observe(this) { message ->
-            binding.errorTextView.setText(message);
-        }
-        viewModel.isVisible.observe(this) { visible ->
-            if (visible) {
-
-                binding.mainProgressBar.visibility = VISIBLE;
-            }
-            else {
-                binding.mainProgressBar.visibility = GONE;
-            }
-
-        }
-
-        // subcribe UI event
-        binding.allArticleButton.setOnClickListener {
-            viewModel.fetchAllArticle();
-        }
 
 
 //        binding.allArticlesButton.setOnClickListener {

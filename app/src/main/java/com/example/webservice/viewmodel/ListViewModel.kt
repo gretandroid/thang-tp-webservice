@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import java.lang.Boolean.FALSE
 import java.lang.Boolean.TRUE
 
-class MainViewModel : ViewModel() {
+class ListViewModel : ViewModel() {
     private val _listArticle = MutableLiveData<List<Article>>();
 
     private val _error = MutableLiveData<String>();
@@ -32,7 +32,7 @@ class MainViewModel : ViewModel() {
             withContext(Dispatchers.IO) {
                 Thread.sleep(3000);
                 try {
-                    val articles = RetrofitInstance.instance.getArticles();
+                    val articles = RetrofitInstance.articleDao.getArticles();
                     Log.d("App", articles.toString())
                     result.addAll(articles)
                 } catch (e: Exception) {
@@ -43,7 +43,9 @@ class MainViewModel : ViewModel() {
                 }
             }
             _listArticle.value = result;
-            _error.value = errorMessage;
+            if (errorMessage !== null) {
+                _error.value = errorMessage!!;
+            }
             _isVisible.value = visible;
 
         }

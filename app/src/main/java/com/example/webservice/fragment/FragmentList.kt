@@ -1,60 +1,77 @@
 package com.example.webservice.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.webservice.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.webservice.databinding.FragmentListBinding
+import com.example.webservice.model.Article
+import com.example.webservice.recyclerview.ArticleAdapter
+import com.example.webservice.viewmodel.ListViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentList.newInstance] factory method to
- * create an instance of this fragment.
- */
-class FragmentList : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+class FragmentList : Fragment(), ArticleAdapter.ArticleAdapterListener {
+    private lateinit var viewModel: ListViewModel
+    private lateinit var binding: FragmentListBinding
+    private val listArticle = mutableListOf<Article>();
+    private var adapter: ArticleAdapter? = null;
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list, container, false)
+
+        binding = FragmentListBinding.inflate(inflater, container, false)
+
+        viewModel = ViewModelProvider(this).get(ListViewModel::class.java);
+        binding.recyclerView.addItemDecoration(
+                DividerItemDecoration(binding.recyclerView.getContext(),
+        DividerItemDecoration.VERTICAL
+    )
+)
+        // subcribe update UI
+        viewModel.listArticle.observe(this.viewLifecycleOwner) { articles ->
+            listArticle.clear();
+            listArticle.addAll(articles);
+
+            if (adapter === null) {
+                adapter = ArticleAdapter(listArticle, this);
+                binding.recyclerView.layoutManager = LinearLayoutManager(this.context);
+                binding.recyclerView.adapter = adapter;
+            } else {
+                adapter?.notifyDataSetChanged();
+            }
+        }
+        viewModel.error.observe(this.viewLifecycleOwner) { message ->
+            binding.errorTextView.setText(message);
+        }
+        viewModel.isVisible.observe(this.viewLifecycleOwner) { visible ->
+            if (visible) {
+
+                binding.mainProgressBar.visibility = View.VISIBLE;
+            } else {
+                binding.mainProgressBar.visibility = View.GONE;
+            }
+
+        }
+
+        // subcribe UI event
+        binding.allArticleButton.setOnClickListener {
+            viewModel.fetchAllArticle();
+        }
+
+        return binding.root;
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentList.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentList().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onClick(view: View?, article: Article?) {
+        Navigation
+            .findNavController(binding.root)
+            .navigate(FragmentListDirections.actionFragmentListToFragmentItem(article!!))
     }
+
 }

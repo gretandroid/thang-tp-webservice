@@ -12,7 +12,11 @@ object RetrofitInstance {
             .build()
     }
 
-    val instance: DaoArticle by lazy {
+    val articleDao: DaoArticle by lazy {
         retrofit.create(DaoArticle::class.java)
+    }
+
+    val personDao: DaoPerson by lazy {
+        retrofit.create(DaoPerson::class.java)
     }
 }

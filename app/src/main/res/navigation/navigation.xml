@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_fragmentItem_to_fragmentEdit"
             app:destination="@id/fragmentEdit" />
+        <argument
+            android:name="article"
+            app:argType="com.example.webservice.model.Article" />
     </fragment>
     <fragment
         android:id="@+id/fragmentEdit"

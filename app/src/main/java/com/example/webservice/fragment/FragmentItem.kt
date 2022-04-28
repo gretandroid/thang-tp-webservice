@@ -5,56 +5,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.example.webservice.R
+import com.example.webservice.databinding.FragmentItemBinding
+import com.example.webservice.databinding.FragmentListBinding
+import com.example.webservice.viewmodel.ItemViewModel
+import com.example.webservice.viewmodel.ListViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentItem.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentItem : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private lateinit var viewModel: ItemViewModel
+    private lateinit var binding: FragmentItemBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_item, container, false)
+        binding = FragmentItemBinding.inflate(inflater, container, false)
+        val args = FragmentItemArgs.fromBundle(requireArguments())
+        Toast.makeText(context, "articleId: ${args.article.id} | userId: ${args.article.userid}", Toast.LENGTH_LONG).show()
+        viewModel = ViewModelProvider(this).get(ItemViewModel::class.java);
+        viewModel.onReveived(args.article)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentItem.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentItem().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

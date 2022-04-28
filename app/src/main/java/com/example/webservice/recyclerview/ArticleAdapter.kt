@@ -8,7 +8,7 @@ import com.example.webservice.R
 import com.example.webservice.databinding.RowBinding
 import com.example.webservice.model.Article
 
-class ArticleAdapter(private val listArticle : List<Article>?, listener : ArticleAdapterListener) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
+class ArticleAdapter(private val listArticle : List<Article>?, private val listener : ArticleAdapterListener) : RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -17,10 +17,14 @@ class ArticleAdapter(private val listArticle : List<Article>?, listener : Articl
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            with(holder.binding) {
-                titleText.setText(listArticle?.get(position)?.title ?: "");
-                contentText.setText(listArticle?.get(position)?.content ?: "");
+        with(holder.binding) {
+            titleText.setText(listArticle?.get(position)?.title ?: "");
+            contentText.setText(listArticle?.get(position)?.content ?: "");
+            rowLayout.setOnClickListener {
+                listener.onClick(it, listArticle?.get(position))
             }
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -32,6 +36,6 @@ class ArticleAdapter(private val listArticle : List<Article>?, listener : Articl
     }
 
     interface ArticleAdapterListener {
-        fun onClick(view: View?, person: Article?)
+        fun onClick(view: View?, article: Article?)
     }
 }
