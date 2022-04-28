@@ -39,7 +39,7 @@ class FragmentList : Fragment(), ArticleAdapter.ArticleAdapterListener {
             listArticle.clear();
             listArticle.addAll(articles);
 
-            if (adapter === null) {
+            if (binding.recyclerView.adapter === null) {
                 adapter = ArticleAdapter(listArticle, this);
                 binding.recyclerView.layoutManager = LinearLayoutManager(this.context);
                 binding.recyclerView.adapter = adapter;

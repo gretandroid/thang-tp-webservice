@@ -1,6 +1,7 @@
 package com.example.webservice.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,9 +19,9 @@ class ListViewModel : ViewModel() {
     private val _error = MutableLiveData<String>();
     private val _isVisible = MutableLiveData<Boolean>();
 
-    public val listArticle = _listArticle;
-    public val error = _error;
-    public val isVisible = _isVisible;
+    public val listArticle : LiveData<List<Article>> = _listArticle;
+    public val error : LiveData<String> = _error;
+    public val isVisible : LiveData<Boolean> = _isVisible;
 
     fun fetchAllArticle() {
         viewModelScope.launch {
