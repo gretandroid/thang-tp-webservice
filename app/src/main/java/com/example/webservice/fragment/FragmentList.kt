@@ -57,7 +57,6 @@ class FragmentList : Fragment(), ArticleAdapter.ArticleAdapterListener {
             } else {
                 binding.mainProgressBar.visibility = View.GONE;
             }
-
         }
 
         // subcribe UI event

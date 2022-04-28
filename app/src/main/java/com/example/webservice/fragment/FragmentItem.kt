@@ -26,6 +26,9 @@ class FragmentItem : Fragment() {
         Toast.makeText(context, "articleId: ${args.article.id} | userId: ${args.article.userid}", Toast.LENGTH_LONG).show()
         viewModel = ViewModelProvider(this).get(ItemViewModel::class.java);
         viewModel.onReveived(args.article)
+
+        binding.model = viewModel
+        binding.lifecycleOwner = this.viewLifecycleOwner
         return binding.root
     }
 
