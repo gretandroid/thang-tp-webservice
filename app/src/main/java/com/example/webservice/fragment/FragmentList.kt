@@ -1,6 +1,7 @@
 package com.example.webservice.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,10 +31,11 @@ class FragmentList : Fragment(), ArticleAdapter.ArticleAdapterListener {
 
         viewModel = ViewModelProvider(this).get(ListViewModel::class.java);
         binding.recyclerView.addItemDecoration(
-                DividerItemDecoration(binding.recyclerView.getContext(),
-        DividerItemDecoration.VERTICAL
-    )
-)
+            DividerItemDecoration(
+                binding.recyclerView.getContext(),
+                DividerItemDecoration.VERTICAL
+            )
+        )
         // subcribe update UI
         viewModel.listArticle.observe(this.viewLifecycleOwner) { articles ->
             listArticle.clear();
@@ -52,9 +54,12 @@ class FragmentList : Fragment(), ArticleAdapter.ArticleAdapterListener {
         }
         viewModel.isVisible.observe(this.viewLifecycleOwner) { visible ->
             if (visible) {
-
+                Log.d("App", "$visible")
+                Log.d("App-d", "${binding.mainProgressBar.visibility}")
                 binding.mainProgressBar.visibility = View.VISIBLE;
+                Log.d("App-d", "${binding.mainProgressBar.visibility}")
             } else {
+                Log.d("App", "$visible")
                 binding.mainProgressBar.visibility = View.GONE;
             }
         }
@@ -68,9 +73,10 @@ class FragmentList : Fragment(), ArticleAdapter.ArticleAdapterListener {
     }
 
     override fun onClick(view: View?, article: Article?) {
+        val dtoArticle = article?.copy()
         Navigation
             .findNavController(binding.root)
-            .navigate(FragmentListDirections.actionFragmentListToFragmentItem(article!!))
+            .navigate(FragmentListDirections.actionFragmentListToFragmentItem(dtoArticle!!))
     }
 
 }

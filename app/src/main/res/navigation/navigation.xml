@@ -30,5 +30,12 @@
         android:id="@+id/fragmentEdit"
         android:name="com.example.webservice.fragment.FragmentEdit"
         android:label="fragment_edit"
-        tools:layout="@layout/fragment_edit" />
+        tools:layout="@layout/fragment_edit" >
+        <argument
+            android:name="article"
+            app:argType="com.example.webservice.model.Article" />
+        <argument
+            android:name="person"
+            app:argType="com.example.webservice.model.Person" />
+    </fragment>
 </navigation>

@@ -19,36 +19,24 @@ class ListViewModel : ViewModel() {
     private val _error = MutableLiveData<String>();
     private val _isVisible = MutableLiveData<Boolean>();
 
-    public val listArticle : LiveData<List<Article>> = _listArticle;
-    public val error : LiveData<String> = _error;
-    public val isVisible : LiveData<Boolean> = _isVisible;
+    public val listArticle: LiveData<List<Article>> = _listArticle;
+    public val error: LiveData<String> = _error;
+    public val isVisible: LiveData<Boolean> = _isVisible;
 
     fun fetchAllArticle() {
         viewModelScope.launch {
-            var visible : Boolean = TRUE;
-            var errorMessage : String? = null;
-            var result = mutableListOf<Article>();
-
-            _isVisible.value = visible;
-            withContext(Dispatchers.IO) {
-                Thread.sleep(3000);
-                try {
-                    val articles = RetrofitInstance.articleDao.getArticles();
-                    Log.d("App", articles.toString())
-                    result.addAll(articles)
-                } catch (e: Exception) {
-                    Log.d("App", e.toString());
-                    errorMessage = e.toString();
-                } finally {
-                    visible = FALSE;
-                }
+            _isVisible.value = true;
+            try {
+                val articles = RetrofitInstance.articleDao.getArticles();
+                Log.d("App", articles.toString())
+                _listArticle.value = articles
+            } catch (e: Exception) {
+                Log.d("App", e.toString());
+                _error.value = e.toString()
+            } finally {
+                Thread.sleep(5000)
+                _isVisible.value = false
             }
-            _listArticle.value = result;
-            if (errorMessage !== null) {
-                _error.value = errorMessage!!;
-            }
-            _isVisible.value = visible;
-
         }
     }
 
