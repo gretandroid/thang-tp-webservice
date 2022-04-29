@@ -186,10 +186,10 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:visibility="@{model.isVisible ? 0 : 8}"
+        android:layout_marginTop="28dp"
+        android:visibility="@{model.isVisible? @integer/visible : @integer/gone}"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.512"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/websiteTextViewItem"
         tools:visibility="visible" />

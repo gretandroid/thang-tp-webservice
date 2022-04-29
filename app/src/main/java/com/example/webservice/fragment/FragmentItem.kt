@@ -23,7 +23,7 @@ class FragmentItem : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentItemBinding.inflate(inflater, container, false)
         val args = FragmentItemArgs.fromBundle(requireArguments())
-        Toast.makeText(context, "articleId: ${args.article.id} | userId: ${args.article.userid}", Toast.LENGTH_LONG).show()
+//        Toast.makeText(context, "articleId: ${args.article.id} | userId: ${args.article.userid}", Toast.LENGTH_LONG).show()
         viewModel = ViewModelProvider(this).get(ItemViewModel::class.java);
         viewModel.onReveived(args.article)
 
